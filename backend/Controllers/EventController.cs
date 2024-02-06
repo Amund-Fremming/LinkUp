@@ -17,18 +17,18 @@ public class EventController : ControllerBase
     }
 
     [HttpPost ("newevent")]
-    public Task<Event?> CreateEvent(Event newEvent, string creatorUserId)
+    public async Task<ActionResult> CreateEvent(Event newEvent, string creatorUserId)
     {
         throw new NotImplementedException();
     }
 
     [HttpDelete]
-    public Task DeleteEvent(int eventId)
+    public async Task<ActionResult> DeleteEvent(int eventId)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet]
+    [HttpGet("{eventId}")]
     public async Task<ActionResult> GetEventByID(int eventId)
     {
         try 
@@ -50,12 +50,12 @@ public class EventController : ControllerBase
         }
     }
 
-    [HttpGet ("city")]
+    [HttpGet("city/{city}")]
     public async Task<ActionResult> GetEventsInCity(string city)
     {
          try 
         {
-            ICollection<Event> events = await _eventService.GetEventsInCity(city);
+            var events = await _eventService.GetEventsInCity(city);
             return Ok(events);
         } 
         catch(InvalidOperationException e) 
@@ -68,20 +68,36 @@ public class EventController : ControllerBase
         }
     }
 
-    [HttpGet ("eventvisibility")]
-    public Task<ICollection<Event>> GetUserEventsByVisibility(string visibility)
+    [HttpGet("eventvisibility")]
+    public async Task<ActionResult> GetUserEventsByVisibility(string visibility)
     {
         throw new NotImplementedException();
     }
 
-    [HttpGet ("eventfriends")]
-    public Task<ICollection<Event>?> GetUserFriendEvents(string userId)
+    [HttpGet("eventfriends/{userId}")]
+    public async Task<ActionResult> GetUserFriendEvents(string userId)
     {
-        throw new NotImplementedException();
+        try 
+        {
+            var friendEvents = await _eventService.GetUserFriendEvents(userId);
+            return Ok(friendEvents);
+        } 
+        catch(InvalidOperationException e) 
+        {
+            return BadRequest(e.Message);
+        }
+        catch(KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch(Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
     [HttpPut]
-    public Task<Event> UpdateEvent(int eventId, Event updatedEvent)
+    public async Task<ActionResult> UpdateEvent(int eventId, Event updatedEvent)
     {
         throw new NotImplementedException();
     }

@@ -40,6 +40,7 @@ public class EventService : IEventService
 
     public async Task<ICollection<Event>?> GetUserFriendEvents(string userId)
     {
+
         ICollection<User?> friends = await _userRelRepo.GetUserFriends(userId);
 
         if (friends.Count.Equals(0))
