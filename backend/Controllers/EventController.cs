@@ -16,7 +16,7 @@ public class EventController : ControllerBase
         _eventService = eventService;
     }
 
-    [HttpGet]
+    // [HttpGet]
     public Task<Event?> CreateEvent(Event newEvent, string creatorUserId)
     {
         throw new NotImplementedException();
