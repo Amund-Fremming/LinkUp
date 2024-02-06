@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Security;
 using Models;
-using Services;
 using Interfaces;
 using Data;
 using DTOs;
@@ -13,19 +12,10 @@ namespace Controllers;
 public class UserRelationController : ControllerBase
 {
     public readonly IUserRelationService _urService;
-    public readonly AppDbContext _context;
 
     public UserRelationController(IUserRelationService urService, AppDbContext context)
     {
         _urService = urService;
-        _context = context;
-    }
-
-    // Only for testing
-    [HttpGet]
-    public async Task<ActionResult<UserRelation>> GetUserRelation([FromBody] int userRelationId)
-    {
-        return await _context.UserRelations.FindAsync(userRelationId) ?? throw new KeyNotFoundException($"NO USERRELATION WITH ID {userRelationId}");
     }
 
     [HttpPost]
