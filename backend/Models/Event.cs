@@ -25,7 +25,7 @@ public class Event
     public Event() {}
 
     public Event(string creatorUserID, string eventName, string eventDescription, 
-        DateTime eventDateTimeStart, DateTime eventDateTimeEnd, Visibility visibility, string inviteURL,int locationID, Location location)
+        DateTime eventDateTimeStart, DateTime eventDateTimeEnd, Visibility visibility, string inviteURL, int locationID, Location location)
     {
         CreatorUserID = creatorUserID;
         EventName = eventName;

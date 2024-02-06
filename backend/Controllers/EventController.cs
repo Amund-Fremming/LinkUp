@@ -16,39 +16,71 @@ public class EventController : ControllerBase
         _eventService = eventService;
     }
 
-    // [HttpGet]
+    [HttpPost ("newevent")]
     public Task<Event?> CreateEvent(Event newEvent, string creatorUserId)
     {
         throw new NotImplementedException();
     }
 
+    [HttpDelete]
     public Task DeleteEvent(int eventId)
     {
         throw new NotImplementedException();
     }
 
     [HttpGet]
-    public async Task<Event?> GetEventByID([FromBody] int eventId)
+    public async Task<ActionResult> GetEventByID(int eventId)
     {
-        return await _eventService.GetEventByID(eventId) ?? throw new KeyNotFoundException($"NO EVENT WITH ID {eventId} was found");
-        
+        try 
+        {
+            var eventt = await _eventService.GetEventByID(eventId); 
+            return Ok(eventt);
+        } 
+        catch(InvalidOperationException e) 
+        {
+            return BadRequest(e.Message);
+        }
+        catch(KeyNotFoundException e) 
+        {
+            return NotFound(e.Message);
+        }
+        catch(Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
-    public Task<ICollection<Event>> GetEventsInCity(string city)
+    [HttpGet ("city")]
+    public async Task<ActionResult> GetEventsInCity(string city)
     {
-        throw new NotImplementedException();
+         try 
+        {
+            ICollection<Event> events = await _eventService.GetEventsInCity(city);
+            return Ok(events);
+        } 
+        catch(InvalidOperationException e) 
+        {
+            return BadRequest(e.Message);
+        }
+        catch(Exception e)
+        {
+            return StatusCode(500, e.Message);
+        }
     }
 
+    [HttpGet ("eventvisibility")]
     public Task<ICollection<Event>> GetUserEventsByVisibility(string visibility)
     {
         throw new NotImplementedException();
     }
 
+    [HttpGet ("eventfriends")]
     public Task<ICollection<Event>?> GetUserFriendEvents(string userId)
     {
         throw new NotImplementedException();
     }
 
+    [HttpPut]
     public Task<Event> UpdateEvent(int eventId, Event updatedEvent)
     {
         throw new NotImplementedException();

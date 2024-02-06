@@ -25,7 +25,12 @@ public class EventService : IEventService
 
     public async Task<Event?> GetEventByID(int eventId)
     {        
-        return await _eventRepo.GetEventByID(eventId);
+        Event? eventt = await _eventRepo.GetEventByID(eventId);
+
+        if (eventt == null) {
+            throw new KeyNotFoundException($"Event with ID: {eventId}, does not exist! (EventService)");
+        }
+        return eventt;
     }
 
     public async Task<ICollection<Event>> GetEventsInCity(string city)
