@@ -254,8 +254,8 @@ export default function Profile() {
                 {user?.gender === "F"
                   ? "Kvinne"
                   : user?.gender === "M"
-                    ? "Mann"
-                    : "Annet"}
+                  ? "Mann"
+                  : "Annet"}
               </Text>
             </View>
           </View>
@@ -280,7 +280,10 @@ export default function Profile() {
 
               {editMode && (
                 <RNPickerSelect
-                  placeholder={{ label: "Velg din sivilstatus:", value: null }}
+                  placeholder={{
+                    label: "Velg din sivilstatus:",
+                    value: null,
+                  }}
                   onValueChange={(input) => handleRelStatus(input)}
                   items={relationshipStatuses}
                 ></RNPickerSelect>
